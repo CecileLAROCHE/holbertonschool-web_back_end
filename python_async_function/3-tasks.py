@@ -1,16 +1,25 @@
 #!/usr/bin/env python3
 """
-Measure runtime of executing task_wait_random.
+Execute multiple task_wait_random tasks concurrently.
 """
+
 import asyncio
+from typing import List
 
-# Import correct pour un fichier commençant par un chiffre
-wait_random = __import__('0-basic_async_syntax').wait_random
+# Import task_wait_random depuis le module précédent
+task_wait_random = __import__('3-tasks').task_wait_random
 
 
-def task_wait_random(max_delay: int) -> asyncio.Task:
+async def task_wait_n(n: int, max_delay: int) -> List[float]:
     """
-    This function creates and returns an asyncio.Task
-    that will execute the wait_random coroutine with the given max_delay.
+    Spawn task_wait_random n times and return the list of delays
+    in ascending order without using sort().
     """
-    return asyncio.create_task(wait_random(max_delay))
+    tasks = [task_wait_random(max_delay) for _ in range(n)]
+
+    delays: List[float] = []
+    for task in asyncio.as_completed(tasks):
+        delay = await task
+        delays.append(delay)
+
+    return delays

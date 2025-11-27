@@ -27,12 +27,7 @@ async def measure_runtime() -> float:
     """
     start = time.time()
 
-    task1 = async_comprehension()
-    task2 = async_comprehension()
-    task3 = async_comprehension()
-    task4 = async_comprehension()
-
-    await asyncio.gather(task1, task2, task3, task4)
+    await asyncio.gather(*[async_comprehension() for n in range(4)])
 
     end = time.time()
 

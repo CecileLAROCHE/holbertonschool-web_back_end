@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
+"""
+Module providing a helper function for pagination index calculations.
+
+This module contains a single function, index_range, which computes the start
+and end indexes corresponding to a given page number and page size. It is
+typically used in pagination mechanisms to determine which slice of a dataset
+should be returned.
+"""
 
 import csv
-import math
 from typing import List
 
 index_range = __import__('0-simple_helper_function').index_range

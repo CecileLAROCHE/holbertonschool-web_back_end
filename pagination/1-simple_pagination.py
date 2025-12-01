@@ -8,7 +8,8 @@ index_range = __import__('0-simple_helper_function').index_range
 
 
 class Server:
-    """Server class to paginate a database of popular baby names.
+    """
+    Server class to paginate a database of popular baby names.
     """
     DATA_FILE = "Popular_Baby_Names.csv"
 
@@ -16,7 +17,8 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Cached dataset
+        """
+        Cached dataset
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -27,14 +29,19 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """Return a page of the dataset."""
+        # Validations
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
         data = self.dataset()
 
+        # Compute start/end indexes
         start, end = index_range(page, page_size)
 
+        # If out of range → empty list
         if start >= len(data):
             return []
 
-        return (data[start:end])
+        # Return the slice
+        return data[start:end]

@@ -22,7 +22,9 @@ class Server:
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Return the cached dataset or load it from CSV if not already loaded."""
+        """
+        Return the cached dataset or load it from CSV if not already
+        loaded."""
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
                 reader = csv.reader(f)

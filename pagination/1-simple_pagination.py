@@ -40,7 +40,7 @@ class Server:
         start, end = index_range(page, page_size)
 
         # If out of range → empty list
-        if start >= len(data):
+        if start > len(data):
             return []
 
         # Return the slice

@@ -9,3 +9,5 @@
 ## Pagination
 
 ## NoSQL
+
+## ES6 Basics

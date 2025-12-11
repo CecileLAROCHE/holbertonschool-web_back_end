@@ -1,0 +1,20 @@
+# Node dependencies
+node_modules/
+
+# Automatically generated lockfile (not required by Holberton)
+package-lock.json
+
+# Babel cache (sometimes created)
+babel-cache/
+.cache/
+
+# Jest coverage output (if used)
+coverage/
+
+# macOS files
+.DS_Store
+
+# Vim/Emacs temporary files
+*.swp
+*.swo
+*~

@@ -1,42 +1,42 @@
 import Currency from './3-currency.js';
 
 export default class Pricing {
-constructor(amount, currency){
-this._amount = amount;
-this._currency = currency;
+  constructor(amount, currency) {
+    this._amount = amount;
+    this._currency = currency;
+  }
 
-// ----- getters et setters -----
-  
+  // ----- getters et setters -----
+
   // amount
   get amount() {
-    // retourne l'attribut _amount
+    return this._amount;
   }
 
   set amount(value) {
-    // optionnel : vérifier que c'est un nombre
-    // puis assigner à _amount
+    if (typeof value !== "number") throw new TypeError("Length must be a number");
+      this._amount = value; 
   }
 
   // currency
   get currency() {
-    // retourne l'attribut _currency
+    return this._currency;
   }
 
   set currency(value) {
-    // optionnel : vérifier que c'est une instance de Currency
-    // puis assigner à _currency
+    if (!(value instanceof Currency)) {
+      throw new TypeError("currency must be a Currency instance");
+    }
+      this._currency = value; 
   }
 
   // ----- méthode d'instance -----
   displayFullPrice() {
-    // doit retourner : amount currency_name (currency_code)
-    // exemple : 100 Euro (EUR)
+    return ${this_amount} ${this_currency_name} (${thiscurrency_code});
   }
 
   // ----- méthode statique -----
   static convertPrice(amount, conversionRate) {
-    // retourne amount * conversionRate
+      return amount * conversionRate;
   }
-}
-}
 }

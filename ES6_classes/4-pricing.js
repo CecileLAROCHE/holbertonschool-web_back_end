@@ -14,8 +14,10 @@ export default class Pricing {
   }
 
   set amount(value) {
-    if (typeof value !== "number") throw new TypeError("Length must be a number");
-      this._amount = value; 
+    if (typeof value !== "number") {
+      throw new TypeError("Amount must be a number");
+    }
+    this._amount = value; 
   }
 
   // currency
@@ -27,16 +29,18 @@ export default class Pricing {
     if (!(value instanceof Currency)) {
       throw new TypeError("currency must be a Currency instance");
     }
-      this._currency = value; 
+    this._currency = value; 
   }
 
   // ----- méthode d'instance -----
   displayFullPrice() {
-    return ${this_amount} ${this_currency_name} (${thiscurrency_code});
+    // retourne une string : amount currency_name (currency_code)
+    return `${this.amount} ${this.currency.name} (${this.currency.code})`;
   }
 
   // ----- méthode statique -----
   static convertPrice(amount, conversionRate) {
-      return amount * conversionRate;
+    // retourne juste amount * conversionRate
+    return amount * conversionRate;
   }
 }

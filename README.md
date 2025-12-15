@@ -13,3 +13,5 @@
 ## ES6 Basics
 
 ## ES6 classes
+
+## ES6 data manipulation

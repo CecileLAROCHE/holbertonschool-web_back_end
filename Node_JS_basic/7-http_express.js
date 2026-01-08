@@ -1,7 +1,8 @@
 const express = require('express');
-const fs = require('fs');
 const countStudents = require('./3-read_file_async');
+
 const database = process.argv[2];
+
 const app = express();
 const port = 1245;
 
@@ -22,7 +23,6 @@ app.get('/students', (req, res) => {
       res.send(text);
     });
 });
-
 
 app.listen(port, () => {
   console.log(`App listening on ${port}`);

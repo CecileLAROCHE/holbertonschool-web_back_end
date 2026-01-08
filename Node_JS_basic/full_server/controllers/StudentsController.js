@@ -1,4 +1,4 @@
-import { readDatabase } from '../utils.js';
+import readDatabase from '../utils';
 
 export default class StudentsController {
   static getAllStudents(req, res) {
@@ -8,7 +8,8 @@ export default class StudentsController {
         let text = 'This is the list of our students\n';
         const sortedFields = Object.keys(studentsObj).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
         for (const field of sortedFields) {
-          text += `Number of students in ${field}: ${studentsObj[field].length}. List: ${studentsObj[field].join(', ')}\n`;
+          const students = studentsObj[field]; // création d'une variable intermédiaire
+          text += `Number of students in ${field}: ${students.length}. List: ${students.join(', ')}\n`;
         }
         res.status(200).type('text/plain').send(text.trim());
       })
@@ -19,7 +20,7 @@ export default class StudentsController {
 
   static getAllStudentsByMajor(req, res) {
     const database = process.argv[2];
-    const major = req.params.major;
+    const { major } = req.params;
     if (major !== 'CS' && major !== 'SWE') {
       res.status(500).type('text/plain').send('Major parameter must be CS or SWE');
       return;
@@ -27,8 +28,8 @@ export default class StudentsController {
 
     readDatabase(database)
       .then((studentsObj) => {
-        if (!studentsObj[major]) studentsObj[major] = [];
-        res.status(200).type('text/plain').send(`List: ${studentsObj[major].join(', ')}`);
+        const students = studentsObj[major] || [];
+        res.status(200).type('text/plain').send(`List: ${students.join(', ')}`);
       })
       .catch(() => {
         res.status(500).type('text/plain').send('Cannot load the database');

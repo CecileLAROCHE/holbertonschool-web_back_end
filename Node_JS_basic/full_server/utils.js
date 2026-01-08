@@ -1,11 +1,11 @@
 import fs from 'fs';
 
-export function readDatabase(path) {
+function readDatabase(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) reject(err);
 
-      const lines = data.split('\n').filter(line => line.trim() !== '');
+      const lines = data.split('\n').filter((line) => line.trim() !== '');
       const students = lines.slice(1); // ignore header
       const result = {};
       for (const line of students) {
@@ -19,3 +19,5 @@ export function readDatabase(path) {
     });
   });
 }
+
+export default readDatabase;

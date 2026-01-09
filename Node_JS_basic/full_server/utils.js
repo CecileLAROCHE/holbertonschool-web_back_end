@@ -1,23 +1,39 @@
-import fs from 'fs';
+const fs = require('fs');
 
-function readDatabase(path) {
+function readDatabase(filePath) {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf-8', (err, data) => {
-      if (err) reject(err);
-
-      const lines = data.split('\n').filter((line) => line.trim() !== '');
-      const students = lines.slice(1); // ignore header
-      const result = {};
-      for (const line of students) {
-        const parts = line.split(',');
-        const firstname = parts[0].trim();
-        const field = parts[3].trim();
-        if (!result[field]) result[field] = [];
-        result[field].push(firstname);
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
       }
-      resolve(result);
+      const lines = data
+        .trim()
+        .split('\n')
+        .filter((line) => line.trim() !== ''); // removes empty lines
+
+      const header = lines.shift().split(',');
+      const firstnameIndex = header.indexOf('firstname');
+      const fieldIndex = header.indexOf('field');
+
+      const studentsByField = {};
+
+      lines.forEach((line) => {
+        const parts = line.split(',');
+        const firstname = parts[firstnameIndex];
+        const field = parts[fieldIndex];
+
+        if (firstname && field) {
+          if (!studentsByField[field]) {
+            studentsByField[field] = [];
+          }
+          studentsByField[field].push(firstname);
+        }
+      });
+
+      resolve(studentsByField);
     });
   });
 }
 
-export default readDatabase;
+module.exports = readDatabase;
